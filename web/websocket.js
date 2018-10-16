@@ -1,13 +1,11 @@
 var ws;
 
 function connect() {
-    var username = document.getElementById("username").value;
-
     var host = document.location.host;
     var pathname = document.location.pathname;
     var wstype = document.location.protocol === "http:" ? "ws://" : "wss://";
 
-    ws = new WebSocket(wstype + host  + pathname + "chat/" + username);
+    ws = new WebSocket(wstype + host  + pathname + "chat");
 
     ws.onmessage = function(event) {
         var log = document.getElementById("log");

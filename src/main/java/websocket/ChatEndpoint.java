@@ -1,6 +1,7 @@
 package websocket;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -16,28 +17,29 @@ import javax.websocket.server.ServerEndpoint;
 
 import model.Message;
 
-@ServerEndpoint(value = "/chat/{username}", decoders = MessageDecoder.class, encoders = MessageEncoder.class)
+@ServerEndpoint(value = "/chat", decoders = MessageDecoder.class, encoders = MessageEncoder.class)
 public class ChatEndpoint {
     private Session session;
     private static final Set<ChatEndpoint> chatEndpoints = new CopyOnWriteArraySet<>();
+    private static ArrayList<String> sessions = new ArrayList<>();
     private static HashMap<String, String> users = new HashMap<>();
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("username") String username) throws IOException, EncodeException {
+    public void onOpen(Session session) throws IOException, EncodeException {
 
         this.session = session;
         chatEndpoints.add(this);
-        users.put(session.getId(), username);
+        sessions.add(session.getId());
 
         Message message = new Message();
-        message.setFrom(username);
+        message.setFrom(session.getId());
         message.setContent("Connected!");
         broadcast(message);
     }
 
     @OnMessage
     public void onMessage(Session session, Message message) throws IOException, EncodeException {
-        message.setFrom(users.get(session.getId()));
+        message.setFrom(session.getId());
         broadcast(message);
     }
 
