@@ -1,28 +1,19 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Chat</title>
+    <link rel="stylesheet" href="style.css"/>
+    <title>Welcome</title>
 </head>
 <body>
-
-<table>
-    <tr>
-        <td colspan="2">
-            <input type="text" id="username" placeholder="Username"/>
-            <button type="button" onclick="connect();" >Connect</button>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <textarea readonly="readonly" rows="10" cols="80" id="log"></textarea>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <input type="text" size="51" id="msg" placeholder="Message"/>
-            <button type="button" onclick="send();" >Send</button>
-        </td>
-    </tr>
-</table>
+    <div style="text-align: center">
+        <h1>Welcome to Speed</h1>
+        <form action="${pageContext.request.contextPath}/game.jsp">
+            <input type="submit" value="Create"/>
+        </form>
+        <form action="https://en.wikipedia.org/wiki/Speed_(card_game)" target="_blank">
+            <input type="submit" value="Rules"/>
+        </form>
+    </div>
 </body>
 
 <script src="websocket.js"></script>

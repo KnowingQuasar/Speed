@@ -1,36 +1,27 @@
 package model;
 
 public class Message {
-    private String from;
-    private String to;
-    private String content;
+    private String action;
+    private String card;
 
     @Override
     public String toString() {
         return super.toString();
     }
 
-    public String getFrom() {
-        return from;
+    public String getAction() {
+        return action;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setAction(String action) {
+        this.action = action;
     }
 
-    public String getTo() {
-        return to;
+    public String getCard() {
+        return card;
     }
 
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
+    public void setCard(String card) {
+        this.card = card;
     }
 }

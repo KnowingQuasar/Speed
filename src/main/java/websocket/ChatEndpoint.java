@@ -1,6 +1,7 @@
 package websocket;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -14,30 +15,34 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-import model.Message;
+import model.*;
 
-@ServerEndpoint(value = "/chat/{username}", decoders = MessageDecoder.class, encoders = MessageEncoder.class)
+@ServerEndpoint(value = "/game", decoders = MessageDecoder.class, encoders = MessageEncoder.class)
 public class ChatEndpoint {
     private Session session;
     private static final Set<ChatEndpoint> chatEndpoints = new CopyOnWriteArraySet<>();
-    private static HashMap<String, String> users = new HashMap<>();
+    private static HashMap<String, ArrayList<Card>> users = new HashMap<>();
+    private static boolean createGame = true;
+    private static Board board;
+    private static int numPlayers = 0;
 
     @OnOpen
     public void onOpen(Session session, @PathParam("username") String username) throws IOException, EncodeException {
-
+        if(numPlayers >= 2){
+            return;
+        }
+        if(createGame) {
+            board = new Board();
+            createGame = false;
+        }
         this.session = session;
         chatEndpoints.add(this);
-        users.put(session.getId(), username);
-
-        Message message = new Message();
-        message.setFrom(username);
-        message.setContent("Connected!");
-        broadcast(message);
+        users.put(session.getId(), board.getHand(numPlayers));
+        numPlayers++;
     }
 
     @OnMessage
     public void onMessage(Session session, Message message) throws IOException, EncodeException {
-        message.setFrom(users.get(session.getId()));
         broadcast(message);
     }
 
@@ -45,8 +50,6 @@ public class ChatEndpoint {
     public void onClose(Session session) throws IOException, EncodeException {
         chatEndpoints.remove(this);
         Message message = new Message();
-        message.setFrom(users.get(session.getId()));
-        message.setContent("Disconnected!");
         broadcast(message);
     }
 
