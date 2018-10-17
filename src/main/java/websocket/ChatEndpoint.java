@@ -12,14 +12,15 @@ import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import model.*;
 
-@ServerEndpoint(value = "/game", decoders = MessageDecoder.class, encoders = MessageEncoder.class)
+@ServerEndpoint(value = "/game", decoders = BoardStateDecoder.class, encoders = BoardStateEncoder.class)
 public class ChatEndpoint {
     private Session session;
+    private int id;
+
     private static final Set<ChatEndpoint> chatEndpoints = new CopyOnWriteArraySet<>();
     private static HashMap<String, ArrayList<Card>> users = new HashMap<>();
     private static boolean createGame = true;
@@ -27,30 +28,31 @@ public class ChatEndpoint {
     private static int numPlayers = 0;
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("username") String username) throws IOException, EncodeException {
-        if(numPlayers >= 2){
+    public void onOpen(Session session) throws IOException, EncodeException {
+        if (numPlayers >= 2) {
             return;
         }
-        if(createGame) {
+        if (createGame) {
             board = new Board();
             createGame = false;
         }
         this.session = session;
         chatEndpoints.add(this);
-        users.put(session.getId(), board.getHand(numPlayers));
+        id = numPlayers;
+        users.put(session.getId(), board.getHand(0));
         numPlayers++;
+        BoardState bs = board.generateBoard(0);
+        send(bs);
     }
 
     @OnMessage
-    public void onMessage(Session session, Message message) throws IOException, EncodeException {
-        broadcast(message);
+    public void onMessage(Session session, BoardState bs) throws IOException, EncodeException {
+        broadcast(bs);
     }
 
     @OnClose
     public void onClose(Session session) throws IOException, EncodeException {
         chatEndpoints.remove(this);
-        Message message = new Message();
-        broadcast(message);
     }
 
     @OnError
@@ -58,12 +60,21 @@ public class ChatEndpoint {
         // Do error handling here
     }
 
-    private static void broadcast(Message message) throws IOException, EncodeException {
+    private void send(BoardState bs) {
+        try {
+            this.session.getBasicRemote()
+                    .sendObject(bs);
+        } catch (IOException | EncodeException e){
+            e.printStackTrace();
+        }
+    }
+
+    private static void broadcast(BoardState bs) throws IOException, EncodeException {
         chatEndpoints.forEach(endpoint -> {
             synchronized (endpoint) {
                 try {
                     endpoint.session.getBasicRemote()
-                            .sendObject(message);
+                            .sendObject(bs);
                 } catch (IOException | EncodeException e) {
                     e.printStackTrace();
                 }

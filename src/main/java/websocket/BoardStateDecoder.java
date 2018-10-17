@@ -5,16 +5,15 @@ import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
 import com.google.gson.Gson;
 
-import model.Message;
+import model.BoardState;
 
-public class MessageDecoder implements Decoder.Text<Message> {
+public class BoardStateDecoder implements Decoder.Text<BoardState> {
 
     private static Gson gson = new Gson();
 
     @Override
-    public Message decode(String s) throws DecodeException {
-        Message message = gson.fromJson(s, Message.class);
-        return message;
+    public BoardState decode(String s) throws DecodeException {
+        return gson.fromJson(s, BoardState.class);
     }
 
     @Override

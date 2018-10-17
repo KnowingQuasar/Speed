@@ -6,8 +6,10 @@ public class Board {
     private ArrayList<Card> allCards;
     private Card[] faceUpCards;
     private ArrayList<Card> sides;
-    private ArrayList<ArrayList<Card>> decks;
-    private ArrayList<ArrayList<Card>> hands;
+    private ArrayList<Card> deck1;
+    private ArrayList<Card> deck2;
+    private ArrayList<Card> hand1;
+    private ArrayList<Card> hand2;
     private int p1remaining;
     private int p2remaining;
 
@@ -15,25 +17,35 @@ public class Board {
         allCards = new ArrayList<>();
         faceUpCards = new Card[2];
         sides = new ArrayList<>();
-        decks = new ArrayList<>(2);
-        hands = new ArrayList<>(2);
+        deck1 = new ArrayList<>();
+        deck2 = new ArrayList<>();
+        hand1 = new ArrayList<>();
+        hand2 = new ArrayList<>();
+
         initCards();
+
         faceUpCards[0] = allCards.get(0);
         faceUpCards[1] = allCards.get(1);
         int i = 2;
         for (; i < 12; i++) {
             sides.add(allCards.get(i));
         }
-        for (int k = 1; k <= 2; k++, i += 15) {
-            for (; i < 12 + k * 15; i++) {
-                decks.get(k).add(allCards.get(i));
-            }
+        for (; i < 27; i++) {
+            deck1.add(allCards.get(i));
         }
-        for (int k = 0; k < 2; k++, i += 5) {
-            for (; i < 42 + k * 5; i++) {
-                hands.get(k).add(allCards.get(i));
-            }
+
+        for (; i < 42; i++) {
+            deck2.add(allCards.get(i));
         }
+
+        for (; i < 47; i++) {
+            hand1.add(allCards.get(i));
+        }
+
+        for (; i < 52; i++) {
+            hand2.add(allCards.get(i));
+        }
+
         p1remaining = 20;
         p2remaining = 20;
     }
@@ -50,15 +62,15 @@ public class Board {
     }
 
     public ArrayList<Card> getHand(int pl) {
-        return hands.get(pl);
+        return pl == 0 ? hand1 : hand2;
     }
 
     public BoardState generateBoard(int pl) {
         String hnd[] = new String[5];
         for (int i = 0; i < 5; i++) {
-            hnd[i] = hands.get(pl).get(i).toString();
+            hnd[i] = getHand(pl).get(i).toString();
         }
-        String fc[] = { faceUpCards[0].toString(), faceUpCards[1].toString() };
+        String fc[] = {faceUpCards[0].toString(), faceUpCards[1].toString()};
         return new BoardState(fc, hnd, p1remaining, p2remaining);
     }
 }
