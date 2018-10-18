@@ -1,8 +1,6 @@
 package endpoints;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -25,7 +23,6 @@ public class GameEndpoint {
     private int id;
 
     private static final Set<GameEndpoint> gameEndpoints = new CopyOnWriteArraySet<>();
-    private static HashMap<String, ArrayList<Card>> users = new HashMap<>();
     private static boolean createGame = true;
     private static Board board;
     private static int numPlayers = 0;
@@ -43,7 +40,6 @@ public class GameEndpoint {
         this.session = session;
         gameEndpoints.add(this);
         id = numPlayers;
-        users.put(session.getId(), board.getHand(id));
         numPlayers++;
         BoardState bs = board.generateBoardState(id);
         send(new BoardStateMessage(bs));
@@ -71,14 +67,15 @@ public class GameEndpoint {
     }
 
     @OnClose
-    public void onClose(Session session) throws IOException, EncodeException {
+    public void onClose() {
         gameEndpoints.remove(this);
         broadcast(new DisconnectedMessage(id));
     }
 
     @OnError
-    public void onError(Session session, Throwable throwable) {
-
+    public void onError(Throwable throwable) {
+        onClose();
+        throwable.printStackTrace();
     }
 
     private void send(Message msg) {
@@ -113,7 +110,7 @@ public class GameEndpoint {
         }
     }
 
-    private static void broadcast(Message bs) throws IOException, EncodeException {
+    private static void broadcast(Message bs) {
         for (GameEndpoint endpoint : gameEndpoints) {
             try {
                 endpoint.session.getBasicRemote()
