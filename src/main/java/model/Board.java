@@ -57,7 +57,7 @@ public class Board {
     }
 
     private boolean update(Card c, int pl) {
-        if (hands.get(pl).remove(c))
+        if (!hands.get(pl).remove(c))
             return false;
         Card nc = decks.get(pl).get(0);
         hands.get(pl).add(nc);
@@ -69,7 +69,7 @@ public class Board {
     private boolean canBePlaced(Card fc, Card c) {
         int fcval = fc.getValue();
         int cval = c.getValue();
-        return (fcval - 1 == cval || fcval + 1 == cval) || (fcval == 13 && cval == 1)
+        return cval == 0 || (fcval - 1 == cval || fcval + 1 == cval) || (fcval == 13 && cval == 1)
                 || (fcval == 1 && cval == 13);
     }
 
@@ -109,10 +109,12 @@ public class Board {
         Card c = new Card(card);
 
         if (canBePlaced(faceUpCards.get(0).get(0), c)) {
-            update(c, pl);
+            if(!update(c, pl))
+                return false;
             faceUpCards.get(0).add(0, c);
         } else if (canBePlaced(faceUpCards.get(0).get(0), c)) {
-            update(c, pl);
+            if(!update(c, pl))
+                return false;
             faceUpCards.get(1).add(0, c);
         } else {
             return false;

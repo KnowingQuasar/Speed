@@ -31,7 +31,7 @@ public class GameEndpoint {
     private static int numPlayers = 0;
 
     @OnOpen
-    public void onOpen(Session session) throws IOException, EncodeException {
+    public void onOpen(Session session) {
         if (numPlayers >= 2) {
             id = 1;
             // return;
@@ -50,7 +50,7 @@ public class GameEndpoint {
     }
 
     @OnMessage
-    public void onMessage(Session session, Message msg) throws IOException, EncodeException {
+    public void onMessage(Message msg) {
         if (msg instanceof PlaceMessage) {
             if (!board.placeCard(((PlaceMessage) msg).getCard(), id)) {
                 send(new DoofusMessage(((PlaceMessage) msg).getCard()));
@@ -106,7 +106,7 @@ public class GameEndpoint {
         for(GameEndpoint endpoint :gameEndpoints) {
             try {
                 endpoint.session.getBasicRemote()
-                        .sendObject(board.generateBoardState(endpoint.id));
+                        .sendObject(new BoardStateMessage(board.generateBoardState(endpoint.id)));
             } catch (IOException | EncodeException e) {
                 e.printStackTrace();
             }
