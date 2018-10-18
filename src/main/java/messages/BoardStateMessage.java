@@ -5,14 +5,14 @@ import model.BoardState;
 public class BoardStateMessage extends Message {
     private String fc[];
     private String hand [];
-    private int n1, n2;
+
+    private int remaining[];
 
     public BoardStateMessage(BoardState bs){
         setAction("bs");
         setFc(bs.getFc());
         setHand(bs.getHand());
-        setN2(bs.getN2());
-        setN1(bs.getN1());
+        setRemaining(bs.getRemaining());
     }
 
     public String[] getFc(){
@@ -23,14 +23,6 @@ public class BoardStateMessage extends Message {
         return hand;
     }
 
-    public int getN1() {
-        return n1;
-    }
-
-    public int getN2() {
-        return n2;
-    }
-
     public void setFc(String[] fc) {
         this.fc = fc;
     }
@@ -39,11 +31,11 @@ public class BoardStateMessage extends Message {
         this.hand = hand;
     }
 
-    public void setN1(int n1) {
-        this.n1 = n1;
+    public int[] getRemaining() {
+        return remaining;
     }
 
-    public void setN2(int n2) {
-        this.n2 = n2;
+    public void setRemaining(int[] remaining) {
+        this.remaining = remaining;
     }
 }

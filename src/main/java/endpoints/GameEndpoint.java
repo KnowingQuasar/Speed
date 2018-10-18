@@ -16,8 +16,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import coders.MessageDecoder;
 import coders.MessageEncoder;
-import messages.BoardStateMessage;
-import messages.Message;
+import messages.*;
 import model.*;
 
 @ServerEndpoint(value = "/game", decoders = MessageDecoder.class, encoders = MessageEncoder.class)
@@ -35,7 +34,7 @@ public class GameEndpoint {
     public void onOpen(Session session) throws IOException, EncodeException {
         if (numPlayers >= 2) {
             id = 1;
-           // return;
+            // return;
         }
         if (createGame) {
             board = new Board();
@@ -51,40 +50,77 @@ public class GameEndpoint {
     }
 
     @OnMessage
-    public void onMessage(Session session, Message bs) throws IOException, EncodeException {
-        broadcast(bs);
+    public void onMessage(Session session, Message msg) throws IOException, EncodeException {
+        if (msg instanceof PlaceMessage) {
+            if (!board.placeCard(((PlaceMessage) msg).getCard(), id)) {
+                send(new DoofusMessage(((PlaceMessage) msg).getCard()));
+            }
+            else{
+                if (board.getRemaining(id) == 0) {
+                    send(new WinMessage());
+                    send(new LoseMessage(), id == 0 ? 1 : 0);
+                }
+                broadcastBs();
+            }
+        }
+        else if(msg instanceof StalemateMessage) {
+            if(board.updateStalemate()) {
+                broadcastBs();
+            }
+        }
     }
 
     @OnClose
     public void onClose(Session session) throws IOException, EncodeException {
         gameEndpoints.remove(this);
+        broadcast(new DisconnectedMessage(id));
     }
 
     @OnError
     public void onError(Session session, Throwable throwable) {
-        // Do error handling here
+
     }
 
-    private void send(BoardStateMessage bs) {
+    private void send(Message msg) {
         try {
             this.session.getBasicRemote()
-                    .sendObject(bs);
-        } catch (IOException | EncodeException e){
+                    .sendObject(msg);
+        } catch (IOException | EncodeException e) {
             e.printStackTrace();
         }
     }
 
-    private static void broadcast(Message bs) throws IOException, EncodeException {
-        gameEndpoints.forEach(endpoint -> {
-            synchronized (endpoint) {
-                try {
+    private static void send(Message msg, int pl) {
+        try {
+            for (GameEndpoint endpoint : gameEndpoints) {
+                if(endpoint.id == pl)
                     endpoint.session.getBasicRemote()
-                            .sendObject(bs);
-                } catch (IOException | EncodeException e) {
-                    e.printStackTrace();
-                }
+                            .sendObject(msg);
             }
-        });
+        } catch (IOException | EncodeException e) {
+            e.printStackTrace();
+        }
     }
 
+    private static void broadcastBs() {
+        for(GameEndpoint endpoint :gameEndpoints) {
+            try {
+                endpoint.session.getBasicRemote()
+                        .sendObject(board.generateBoardState(endpoint.id));
+            } catch (IOException | EncodeException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void broadcast(Message bs) throws IOException, EncodeException {
+        for (GameEndpoint endpoint : gameEndpoints) {
+            try {
+                endpoint.session.getBasicRemote()
+                        .sendObject(bs);
+            } catch (IOException | EncodeException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

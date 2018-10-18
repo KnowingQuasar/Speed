@@ -6,7 +6,11 @@ public class Card {
 
     @Override
     public String toString() {
-        return suit + Integer.toString(value);
+        return Integer.toString(value) + suit;
+    }
+
+    boolean equals(Card c) {
+        return value == c.getValue() && suit == c.getSuit();
     }
 
     public char getSuit(){
@@ -21,5 +25,10 @@ public class Card {
     {
         this.suit = suit;
         this.value = value;
+    }
+
+    Card(String rep) {
+        value = Integer.parseInt(rep.substring(0, rep.length() - 1));
+        suit = rep.charAt(rep.length() - 1);
     }
 }

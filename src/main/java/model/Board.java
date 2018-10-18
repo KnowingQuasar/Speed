@@ -1,55 +1,48 @@
 package model;
 
-import messages.BoardStateMessage;
-
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Board {
-    private ArrayList<Card> allCards;
-    private Card[] faceUpCards;
-    private ArrayList<Card> sides;
-    private ArrayList<Card> deck1;
-    private ArrayList<Card> deck2;
-    private ArrayList<Card> hand1;
-    private ArrayList<Card> hand2;
-    private int p1remaining;
-    private int p2remaining;
+    private ArrayList<Card> allCards = new ArrayList<>();
+    private ArrayList<ArrayList<Card>> faceUpCards = new ArrayList<>();
+    private ArrayList<Card> sides = new ArrayList<>();
+    private ArrayList<ArrayList<Card>> decks = new ArrayList<>();
+    private ArrayList<ArrayList<Card>> hands = new ArrayList<>();
+    private int[] remaining = new int[2];
+    private boolean stalemate = false;
 
     public Board() {
-        allCards = new ArrayList<>();
-        faceUpCards = new Card[2];
-        sides = new ArrayList<>();
-        deck1 = new ArrayList<>();
-        deck2 = new ArrayList<>();
-        hand1 = new ArrayList<>();
-        hand2 = new ArrayList<>();
+        decks.add(new ArrayList<>());
+        decks.add(new ArrayList<>());
+        hands.add(new ArrayList<>());
+        hands.add(new ArrayList<>());
+        faceUpCards.add(new ArrayList<>());
+        faceUpCards.add(new ArrayList<>());
 
         initCards();
 
-        faceUpCards[0] = allCards.get(0);
-        faceUpCards[1] = allCards.get(1);
+        faceUpCards.get(0).add(allCards.get(0));
+        faceUpCards.get(1).add(allCards.get(1));
         int i = 2;
         for (; i < 12; i++) {
             sides.add(allCards.get(i));
         }
         for (; i < 27; i++) {
-            deck1.add(allCards.get(i));
+            decks.get(0).add(allCards.get(i));
         }
 
         for (; i < 42; i++) {
-            deck2.add(allCards.get(i));
+            decks.get(1).add(allCards.get(i));
         }
 
         for (; i < 47; i++) {
-            hand1.add(allCards.get(i));
+            hands.get(0).add(allCards.get(i));
         }
 
         for (; i < 52; i++) {
-            hand2.add(allCards.get(i));
+            hands.get(1).add(allCards.get(i));
         }
-
-        p1remaining = 20;
-        p2remaining = 20;
     }
 
     private void initCards() {
@@ -63,8 +56,43 @@ public class Board {
         Collections.shuffle(allCards);
     }
 
+    private boolean update(Card c, int pl) {
+        if (hands.get(pl).remove(c))
+            return false;
+        Card nc = decks.get(pl).get(0);
+        hands.get(pl).add(nc);
+        decks.get(pl).remove(nc);
+        remaining[pl]--;
+        return true;
+    }
+
+    private boolean canBePlaced(Card fc, Card c) {
+        int fcval = fc.getValue();
+        int cval = c.getValue();
+        return (fcval - 1 == cval || fcval + 1 == cval) || (fcval == 13 && cval == 1)
+                || (fcval == 1 && cval == 13);
+    }
+
+    private void recycle() {
+        if (sides.size() == 0) {
+            sides.clear();
+            Collections.shuffle(faceUpCards.get(0));
+            Collections.shuffle(faceUpCards.get(1));
+            sides.addAll(faceUpCards.get(0));
+            sides.addAll(faceUpCards.get(1));
+        }
+        faceUpCards.get(0).add(0, sides.get(0));
+        sides.remove(0);
+        faceUpCards.get(1).add(0, sides.get(0));
+        sides.remove(0);
+    }
+
     public ArrayList<Card> getHand(int pl) {
-        return pl == 0 ? hand1 : hand2;
+        return hands.get(pl);
+    }
+
+    public int getRemaining(int pl) {
+        return remaining[pl];
     }
 
     public BoardState generateBoardState(int pl) {
@@ -72,7 +100,34 @@ public class Board {
         for (int i = 0; i < 5; i++) {
             hnd[i] = getHand(pl).get(i).toString();
         }
-        String fc[] = {faceUpCards[0].toString(), faceUpCards[1].toString()};
-        return new BoardState(fc, hnd, p1remaining, p2remaining);
+        String fc[] = {faceUpCards.get(0).get(0).toString(),
+                faceUpCards.get(1).get(0).toString()};
+        return new BoardState(fc, hnd, remaining);
+    }
+
+    public boolean placeCard(String card, int pl) throws IllegalArgumentException {
+        Card c = new Card(card);
+
+        if (canBePlaced(faceUpCards.get(0).get(0), c)) {
+            update(c, pl);
+            faceUpCards.get(0).add(0, c);
+        } else if (canBePlaced(faceUpCards.get(0).get(0), c)) {
+            update(c, pl);
+            faceUpCards.get(1).add(0, c);
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean updateStalemate() {
+        if (stalemate) {
+            recycle();
+            stalemate = false;
+            return true;
+        }
+        stalemate = true;
+        return false;
     }
 }
