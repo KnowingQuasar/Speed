@@ -1,4 +1,4 @@
-package websocket;
+package endpoints;
 
 import java.io.IOException;
 import java.util.ArrayList;
