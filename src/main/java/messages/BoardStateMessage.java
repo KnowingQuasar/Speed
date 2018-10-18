@@ -1,15 +1,18 @@
-package model;
+package messages;
 
-public class BoardState {
+import model.BoardState;
+
+public class BoardStateMessage extends Message {
     private String fc[];
     private String hand [];
     private int n1, n2;
 
-    public BoardState(String[] fc, String[] hand, int n1, int n2) {
-        this.fc = fc;
-        this.hand = hand;
-        this.n1 = n1;
-        this.n2 = n2;
+    public BoardStateMessage(BoardState bs){
+        setAction("bs");
+        setFc(bs.getFc());
+        setHand(bs.getHand());
+        setN2(bs.getN2());
+        setN1(bs.getN1());
     }
 
     public String[] getFc(){

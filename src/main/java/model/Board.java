@@ -1,5 +1,7 @@
 package model;
 
+import messages.BoardStateMessage;
+
 import java.util.*;
 
 public class Board {
@@ -65,7 +67,7 @@ public class Board {
         return pl == 0 ? hand1 : hand2;
     }
 
-    public BoardState generateBoard(int pl) {
+    public BoardState generateBoardState(int pl) {
         String hnd[] = new String[5];
         for (int i = 0; i < 5; i++) {
             hnd[i] = getHand(pl).get(i).toString();
