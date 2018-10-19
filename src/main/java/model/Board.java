@@ -1,6 +1,5 @@
 package model;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Board {
@@ -21,9 +20,10 @@ public class Board {
         faceUpCards.add(new ArrayList<>());
 
         initCards();
-
-        faceUpCards.get(0).add(allCards.get(0));
-        faceUpCards.get(1).add(allCards.get(1));
+        for (int i = 0; i < 2; i++) {
+            faceUpCards.get(i).add(allCards.get(i));
+            remaining[i] = 20;
+        }
         int i = 2;
         for (; i < 12; i++) {
             sides.add(allCards.get(i));
@@ -58,12 +58,12 @@ public class Board {
 
     private boolean update(Card c, int pl) {
         if (!hands.get(pl).remove(c))
-            return false;
+            return true;
         Card nc = decks.get(pl).get(0);
         hands.get(pl).add(nc);
         decks.get(pl).remove(nc);
         remaining[pl]--;
-        return true;
+        return false;
     }
 
     private boolean canBePlaced(Card fc, Card c) {
@@ -87,7 +87,7 @@ public class Board {
         sides.remove(0);
     }
 
-    public ArrayList<Card> getHand(int pl) {
+    private ArrayList<Card> getHand(int pl) {
         return hands.get(pl);
     }
 
@@ -109,11 +109,11 @@ public class Board {
         Card c = new Card(card);
 
         if (canBePlaced(faceUpCards.get(0).get(0), c)) {
-            if(!update(c, pl))
+            if(update(c, pl))
                 return false;
             faceUpCards.get(0).add(0, c);
         } else if (canBePlaced(faceUpCards.get(0).get(0), c)) {
-            if(!update(c, pl))
+            if(update(c, pl))
                 return false;
             faceUpCards.get(1).add(0, c);
         } else {

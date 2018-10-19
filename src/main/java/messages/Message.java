@@ -7,7 +7,7 @@ public abstract class Message {
         return action;
     }
 
-    public void setAction(String action) {
+    void setAction(String action) {
         this.action = action;
     }
 

@@ -1,7 +1,3 @@
 package messages;
 
-public class StalemateMessage extends Message{
-    public StalemateMessage() {
-        setAction("stalemate");
-    }
-}
+public class StalemateMessage extends Message{ }

@@ -69,7 +69,7 @@ public class GameEndpoint {
     @OnClose
     public void onClose() {
         gameEndpoints.remove(this);
-        broadcast(new DisconnectedMessage(id));
+        broadcast(new DisconnectedMessage());
     }
 
     @OnError

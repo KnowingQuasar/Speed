@@ -7,7 +7,7 @@
 <body>
     <div style="text-align: center">
         <h1>Welcome to Speed</h1>
-        <button onclick="sendM('0D');">Push</button>
+        <button onclick="testStalemate();">Push</button>
     </div>
 </body>
 

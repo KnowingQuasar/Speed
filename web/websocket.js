@@ -11,9 +11,23 @@ ws.onmessage = function (event) {
         case "doofus":
             alert("doofus");
             break;
+        case "lose":
+            alert("lose");
+            break;
+        case "win":
+            alert("win");
+            break;
+        case "dc":
+            alert("dc");
+            break;
     }
 };
 
-function sendM(c){
-    ws.send(JSON.stringify({ "action" : "place", card : c.toString()}));
+function testStalemate() {
+    ws.send(JSON.stringify({ "action" : "stalemate" }));
 }
+
+function testPlaceMessage() {
+    ws.send(JSON.stringify({ "action" : "place", "card" : "0D" }));
+}
+
