@@ -100,7 +100,7 @@ public class GameEndpoint {
     }
 
     private static void broadcastBs() {
-        for(GameEndpoint endpoint :gameEndpoints) {
+        for(GameEndpoint endpoint : gameEndpoints) {
             try {
                 endpoint.session.getBasicRemote()
                         .sendObject(new BoardStateMessage(board.generateBoardState(endpoint.id)));
