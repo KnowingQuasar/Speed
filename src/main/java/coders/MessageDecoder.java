@@ -2,7 +2,6 @@ package coders;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.websocket.DecodeException;
 import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
 
@@ -12,7 +11,7 @@ import java.io.StringReader;
 
 public class MessageDecoder implements Decoder.Text<Message> {
     @Override
-    public Message decode(String msg) throws DecodeException {
+    public Message decode(String msg) {
         Message message = null;
         if(willDecode(msg)) {
             JsonObject obj = Json.createReader(new StringReader(msg)).readObject();

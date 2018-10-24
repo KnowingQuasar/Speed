@@ -29,9 +29,9 @@ public class GameEndpoint {
 
     @OnOpen
     public void onOpen(Session session) {
-        if (numPlayers >= 2) {
-            id = 1;
-            // return;
+        if (numPlayers >= 1) {
+//            id = 1;
+             return;
         }
         if (createGame) {
             board = new Board();
@@ -55,13 +55,19 @@ public class GameEndpoint {
                 if (board.getRemaining(id) == 0) {
                     send(new WinMessage());
                     send(new LoseMessage(), id == 0 ? 1 : 0);
+                    return;
                 }
+                if(board.resetStalemate())
+                    send(new CloseStalemateMessage(), id == 0 ? 1 : 0);
                 broadcastBs();
             }
         }
         else if(msg instanceof StalemateMessage) {
             if(board.updateStalemate()) {
                 broadcastBs();
+            }
+            else {
+                send(new OpenStalemateMessage());
             }
         }
     }
