@@ -1,4 +1,11 @@
 azureSettings.xml
-Maven_*.xml
+.idea/modules.xml
+.idea/*.iml
+.idea/modules
 out/
 target/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
