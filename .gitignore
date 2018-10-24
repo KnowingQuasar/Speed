@@ -1,3 +1,4 @@
 azureSettings.xml
-vcs.xml
 Maven_*.xml
+out/
+target/
