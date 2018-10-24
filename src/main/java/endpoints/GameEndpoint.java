@@ -29,7 +29,7 @@ public class GameEndpoint {
 
     @OnOpen
     public void onOpen(Session session) {
-        if (numPlayers >= 1) {
+        if (numPlayers > 1) {
 //            id = 1;
              return;
         }
@@ -64,6 +64,7 @@ public class GameEndpoint {
         }
         else if(msg instanceof StalemateMessage) {
             if(board.updateStalemate()) {
+                send(new CloseStalemateMessage(), id == 0 ? 1 : 0);
                 broadcastBs();
             }
             else {
@@ -76,6 +77,7 @@ public class GameEndpoint {
     public void onClose() {
         gameEndpoints.remove(this);
         broadcast(new DisconnectedMessage());
+        numPlayers--;
     }
 
     @OnError

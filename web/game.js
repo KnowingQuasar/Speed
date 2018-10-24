@@ -7,25 +7,25 @@ ws.onmessage = function (event) {
 
     switch (bs.action) {
         case "bs":
-            alert("bs");
+            console.log("bs");
             break;
         case "doofus":
-            alert("doofus");
+            console.log("doofus");
             break;
         case "lose":
-            alert("lose");
+            console.log("lose");
             break;
         case "win":
-            alert("win");
+            console.log("win");
             break;
         case "dc":
-            alert("dc");
+            console.log("dc");
             break;
         case "open":
-            alert("open");
+            stalemateModal.show();
             break;
         case "close":
-            alert("close");
+            stalemateModal.hide();
             break;
     }
 };
@@ -34,12 +34,12 @@ $('#unhide').click(function () {
     stalemateModal.show();
 });
 
-window.onclick = function(ev) {
-    if($(ev).target === stalemateModal)
+$(window).click(function (ev) {
+    if ($(ev.target).is('#stalemateModal'))
         hideStalemate();
-};
+});
 
-function hideStalemate(){
+function hideStalemate() {
     stalemateModal.hide();
 }
 
