@@ -10,3 +10,5 @@ target/
 .idea/**/dictionaries
 .idea/**/shelf
 .idea/**/uiDesigner.xml
+.idea/libraries
+Speed.iml
