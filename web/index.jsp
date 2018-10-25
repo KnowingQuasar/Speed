@@ -1,30 +1,25 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Chat</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="modal.css"/>
+    <title>Welcome</title>
 </head>
 <body>
-
-<table>
-    <tr>
-        <td colspan="2">
-            <input type="text" id="username" placeholder="Username"/>
-            <button type="button" onclick="connect();" >Connect</button>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <textarea readonly="readonly" rows="10" cols="80" id="log"></textarea>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <input type="text" size="51" id="msg" placeholder="Message"/>
-            <button type="button" onclick="send();" >Send</button>
-        </td>
-    </tr>
-</table>
+<div id="stalemateModal" class="modal">
+    <div class="modal-content">
+        Waiting for other player<span class="one">.</span><span class="two">.</span><span class="three">.</span>
+    </div>
+</div>
+<div style="text-align: center">
+    <h1>Welcome to Speed</h1>
+    <button onclick="testStalemate();">stale</button>
+    <button onclick="testPlaceMessage();">place</button>
+    <button id="unhide">unhide</button>
+</div>
 </body>
 
-<script src="websocket.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="game.js"></script>
 
 </html>
