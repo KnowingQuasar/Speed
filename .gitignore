@@ -2,6 +2,7 @@ azureSettings.xml
 .idea/modules.xml
 .idea/*.iml
 .idea/modules
+.idea/artifacts
 out/
 target/
 .idea/**/workspace.xml
@@ -11,3 +12,4 @@ target/
 .idea/**/shelf
 .idea/**/uiDesigner.xml
 .idea/libraries
+Speed.iml
