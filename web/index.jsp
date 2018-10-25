@@ -1,25 +1,43 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" type="text/css" href="content/style.css"/>
     <link rel="stylesheet" href="modal.css"/>
-    <title>Welcome</title>
+    <title>Chat</title>
 </head>
+
 <body>
-<div id="stalemateModal" class="modal">
-    <div class="modal-content">
-        Waiting for other player<span class="one">.</span><span class="two">.</span><span class="three">.</span>
-    </div>
+
+<div class="cardsTop">
+    <span class="deckOpponent"><img class="smallCard" src="/content/gray_back.png" alt="back"></span>
+    <span class="divSmall"><img class="smallCard" src="/content/gray_back.png" alt="back"></span>
+    <span class="divSmall"><img class="smallCard" src="/content/gray_back.png" alt="back"></span>
+    <span class="divSmall"><img class="smallCard" src="/content/gray_back.png" alt="back"></span>
+    <span class="divSmall"><img class="smallCard" src="/content/gray_back.png" alt="back"></span>
+    <span class="left">
+            <img class="smallCard" src="/content/gray_back.png" alt="back" align="left">
+        </span>
 </div>
-<div style="text-align: center">
-    <h1>Welcome to Speed</h1>
-    <button onclick="testStalemate();">stale</button>
-    <button onclick="testPlaceMessage();">place</button>
-    <button id="unhide">unhide</button>
+<br>
+<div class="cardsMid">
+    <span class="divLarge"><img class="card" src="/content/gray_back.png" alt="backLarge"></span>
+    <span class="divLarge"><img class="card" src="/content/1H.png" alt="backLarge"></span>
+    <!--<span class="divLarge"><img class="card" src="/content/2H.png" alt="backLarge"></span>-->
+    <span class="divLarge"><img class="card" src="/content/green.PNG" alt="backLarge"></span>
+    <span class="divLarge"><img class="card" src="/content/gray_back.png" alt="backLarge"></span>
 </div>
-</body>
+<br>
+<div class="cardsBot">
+    <span class=" right"><img class="smallCard" src="/content/3H.png" alt="back" align="right"></span>
+    <span class="divSmall"><img class="smallCard" src="/content/4C.png" alt="back"></span>
+    <span class="divSmall"><img class="smallCard" src="/content/5D.png" alt="back"></span>
+    <span class="divSmall"><img class="smallCard" src="/content/6H.png" alt="back"></span>
+    <span class="divSmall"><img class="smallCard" src="/content/7H.png" alt="back"></span>
+    <span class="deckPlayer"><img class="smallCard" src="/content/gray_back.png" alt="back"></span>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="game.js"></script>
-
+</body>
 </html>

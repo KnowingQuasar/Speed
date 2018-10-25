@@ -1,0 +1,70 @@
+body
+{
+    background-color: forestgreen;
+}
+
+.smallCard
+{
+    width: 100px;
+    height: auto;
+}
+
+.card
+{
+    width: 200px;
+    height: auto;
+}
+
+.right
+{
+    width: 258px;
+    height: auto;
+    float: left;
+    padding-right: 4px;
+}
+
+.left
+{
+    width: 258px;
+    height: auto;
+    float: right;
+}
+
+.deckPlayer
+{
+    width: 100px;
+    margin-left: 50px;
+    float: right;
+}
+
+.deckOpponent
+{
+    width: 100px;
+    margin-right: 50px;
+    float: left;
+}
+.cardsTop
+{
+    width: 824px;
+    margin: auto;
+}
+
+.cardsBot
+{
+    width: 824px;
+    margin: auto;
+}
+.cardsMid
+{
+    width: 812px;
+    margin: auto;
+}
+.divLarge
+{
+    width: 204px;
+}
+
+.divSmall
+{
+    width: 104px;
+}
