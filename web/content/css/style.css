@@ -3,6 +3,27 @@ body
     background-color: forestgreen;
 }
 
+img {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.selected
+{
+    box-shadow: 0 0 10px 4px blue;
+}
+
+.invalid
+{
+    box-shadow: 0 0 10px 4px red;
+}
+
+.changed
+{
+    box-shadow: 0 0 10px 4px gold;
+}
+
 .smallCard
 {
     width: 100px;

@@ -109,7 +109,7 @@ public class Board {
         }
         String fc[] = {faceUpCards.get(0).get(0).toString(),
                 faceUpCards.get(1).get(0).toString()};
-        return new BoardState(fc, hnd, remaining);
+        return new BoardState(fc, hnd, new int[] {remaining[pl], remaining[pl == 0 ? 1 : 0]});
     }
 
     public boolean placeCard(String card, int pl) throws IllegalArgumentException {
