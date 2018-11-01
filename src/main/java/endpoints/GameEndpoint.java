@@ -41,8 +41,8 @@ public class GameEndpoint {
         gameEndpoints.add(this);
         id = numPlayers;
         numPlayers++;
-        BoardState bs = board.generateBoardState(id);
-        send(new BoardStateMessage(bs));
+        if(numPlayers == 2)
+            broadcastBs();
     }
 
     @OnMessage

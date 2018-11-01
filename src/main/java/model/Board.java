@@ -120,7 +120,7 @@ public class Board {
             if(update(c, pl))
                 return false;
             faceUpCards.get(0).add(0, c);
-        } else if (canBePlaced(faceUpCards.get(0).get(0), c)) {
+        } else if (canBePlaced(faceUpCards.get(1).get(0), c)) {
             if(update(c, pl))
                 return false;
             faceUpCards.get(1).add(0, c);

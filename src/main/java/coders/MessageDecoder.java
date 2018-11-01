@@ -22,8 +22,10 @@ public class MessageDecoder implements Decoder.Text<Message> {
                 switch(action) {
                     case "place":
                         message = mp.readValue(msg, PlaceMessage.class);
+                        break;
                     case "stalemate":
                         message = mp.readValue(msg, StalemateMessage.class);
+                        break;
                 }
             }
             catch (Exception e){

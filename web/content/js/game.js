@@ -1,5 +1,5 @@
 var ws = new WebSocket((document.location.protocol === "http:" ? "ws://" : "wss://") + document.location.host + "/game");
-var stalemateModal = $("#stalemateModal");
+var modal = $("#modal");
 var clickedCard;
 
 ws.onmessage = function (event) {
@@ -8,11 +8,17 @@ ws.onmessage = function (event) {
 
     switch (bs.action) {
         case "bs":
+            modal.hide();
             console.log("Received board state");
+            clickedCard = null;
             ReloadBoard(bs);
             break;
         case "doofus":
-            console.log("doofus");
+            console.log("Received doofus message");
+            if (clickedCard) {
+                $('.selected').removeClass('selected');
+                clickedCard.addClass('invalid');
+            }
             break;
         case "lose":
             console.log("lose");
@@ -24,20 +30,16 @@ ws.onmessage = function (event) {
             console.log("dc");
             break;
         case "open":
-            stalemateModal.show();
+            modal.show();
             break;
         case "close":
-            stalemateModal.hide();
+            modal.hide();
             break;
     }
 };
 
-$('#unhide').click(function () {
-    stalemateModal.show();
-});
-
 $('#pl').click(function (e) {
-    if(!$(e.target).hasClass('smallCard') || $(e.target).attr('id') === 'plD')
+    if (!$(e.target).hasClass('smallCard') || $(e.target).attr('id') === 'plD')
         return;
     clickedCard = $(e.target);
     selectCard();
@@ -46,47 +48,48 @@ $('#pl').click(function (e) {
 $('#mid').click(function () {
     if (clickedCard) {
         $('.selected').removeClass('selected');
-        let card = $(clickedCard).attr('id');
+        let card = $(clickedCard).attr('src').substring('/content/images/'.length, clickedCard.attr('src').lastIndexOf('.'));
         console.log("Sending " + card);
         ws.send(JSON.stringify({'action': 'place', 'card': card}));
     }
 });
 
 $(window).click(function (e) {
-    if ($(e.target).is('#stalemateModal'))
+    if ($(e.target).is('#modal'))
         hideStalemate();
 });
 
 function ReloadBoard(bs) {
-    if(bs.remaining[0] === 0){
+    if (bs.remaining[0] === 0) {
         $('#plD').src = '/content/images/green.PNG';
     }
-    if(bs.remaining[1] === 0) {
+    if (bs.remaining[1] === 0) {
         $('#opD').src = '/content/images/green.PNG';
     }
-    $('#fc1').attr('src', '/content/images/' + bs.fc[0] + '.png').attr('id', bs.fc[0]);
-    $('#fc2').attr('src', '/content/images/' + bs.fc[1] + '.png').attr('id', bs.fc[1]);
+    $('#fc1').attr('src', `/content/images/${bs.fc[0]}.png`);
+    $('#fc2').attr('src', `/content/images/${bs.fc[1]}.png`);
     let i = 0;
-    $('#pl > span').each(function() {
-        if($(this).hasClass('deckPlayer'))
+    $('#pl > span').each(function () {
+        if ($(this).hasClass('deckPlayer'))
             return;
-        $(this.firstChild).attr('src', '/content/images/' + bs.hand[i] + '.png' ).attr('id', bs.hand[i]);
+        $(this.firstChild).attr('src', `/content/images/${bs.hand[i]}.png`).attr('id', bs.hand[i]);
         i++;
     });
 }
 
 function selectCard() {
-    $('.selected').removeClass('selected');
-    $(clickedCard).addClass('selected');
+    $('.invalid').removeClass('invalid');
+    $('.selected').removeClass('invalid').removeClass('selected');
+    clickedCard.addClass('selected');
 }
 
 function hideStalemate() {
-    stalemateModal.hide();
+    modal.hide();
 }
 
-function testStalemate() {
+$('#stalemate').click(function() {
     ws.send(JSON.stringify({'action': 'stalemate'}));
-}
+});
 
 function testPlaceMessage() {
     ws.send(JSON.stringify({'action': 'place', 'card': '0D'}));
