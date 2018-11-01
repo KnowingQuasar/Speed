@@ -4,14 +4,14 @@ var clickedCard;
 
 ws.onmessage = function (event) {
     console.log(event.data);
-    let bs = JSON.parse(event.data);
+    let msg = JSON.parse(event.data);
 
-    switch (bs.action) {
+    switch (msg.action) {
         case "bs":
             modal.hide();
             console.log("Received board state");
             clickedCard = null;
-            ReloadBoard(bs);
+            ReloadBoard(msg);
             break;
         case "doofus":
             console.log("Received doofus message");
@@ -48,7 +48,7 @@ $('#pl').click(function (e) {
 $('#mid').click(function () {
     if (clickedCard) {
         $('.selected').removeClass('selected');
-        let card = $(clickedCard).attr('src').substring('/content/images/'.length, clickedCard.attr('src').lastIndexOf('.'));
+        let card = clickedCard.attr('src').substring('/content/images/'.length, clickedCard.attr('src').lastIndexOf('.'));
         console.log("Sending " + card);
         ws.send(JSON.stringify({'action': 'place', 'card': card}));
     }
@@ -66,13 +66,19 @@ function ReloadBoard(bs) {
     if (bs.remaining[1] === 0) {
         $('#opD').src = '/content/images/green.PNG';
     }
+    $('#remaining1').text('Total 1: ' + bs.remaining[0]);
+    $('#remaining2').text('Total 2: ' + bs.remaining[1]);
     $('#fc1').attr('src', `/content/images/${bs.fc[0]}.png`);
     $('#fc2').attr('src', `/content/images/${bs.fc[1]}.png`);
     let i = 0;
+    let j = bs.hand.length;
     $('#pl > span').each(function () {
         if ($(this).hasClass('deckPlayer'))
             return;
-        $(this.firstChild).attr('src', `/content/images/${bs.hand[i]}.png`).attr('id', bs.hand[i]);
+        if(i < j)
+            $(this.firstChild).attr('src', `/content/images/${bs.hand[i]}.png`);
+        else
+            $(this.firstChild).attr('src', '/content/images/green.PNG');
         i++;
     });
 }

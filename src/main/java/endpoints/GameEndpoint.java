@@ -4,12 +4,7 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import javax.websocket.EncodeException;
-import javax.websocket.OnClose;
-import javax.websocket.OnError;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
+import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
 import coders.MessageDecoder;
@@ -82,6 +77,10 @@ public class GameEndpoint {
 
     @OnError
     public void onError(Throwable throwable) {
+        if(throwable instanceof DecodeException) {
+            send(new DoofusMessage("Invalid Card"));
+            return;
+        }
         onClose();
         throwable.printStackTrace();
     }

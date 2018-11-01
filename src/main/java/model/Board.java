@@ -59,9 +59,11 @@ public class Board {
     private boolean update(Card c, int pl) {
         if (!hands.get(pl).remove(c))
             return true;
-        Card nc = decks.get(pl).get(0);
-        hands.get(pl).add(nc);
-        decks.get(pl).remove(nc);
+        if(remaining[pl] > 5) {
+            Card nc = decks.get(pl).get(0);
+            hands.get(pl).add(nc);
+            decks.get(pl).remove(nc);
+        }
         remaining[pl]--;
         return false;
     }
@@ -103,8 +105,9 @@ public class Board {
     }
 
     public BoardState generateBoardState(int pl) {
-        String hnd[] = new String[5];
-        for (int i = 0; i < 5; i++) {
+        int sz = getHand(pl).size();
+        String hnd[] = new String[sz];
+        for (int i = 0; i < sz ; i++) {
             hnd[i] = getHand(pl).get(i).toString();
         }
         String fc[] = {faceUpCards.get(0).get(0).toString(),

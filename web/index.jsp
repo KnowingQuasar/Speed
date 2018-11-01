@@ -14,7 +14,10 @@
         <p>Waiting for Other Player to Join<span class="one">.</span><span class="two">.</span><span class="three">.</span></p>
     </div>
 </div>
-
+<div>
+    <p id="remaining1"></p>     <p id="remaining2"></p>
+    <br>
+</div>
 <div class="cardsTop">
     <span class="deckOpponent"><img id="opD" class="smallCard" src="/content/images/gray_back.png" alt="back" draggable="false" ondragstart="return false;"></span>
     <span class="divSmall"><img id="op1" class="smallCard" src="/content/images/gray_back.png" alt="back" draggable="false" ondragstart="return false;"></span>
