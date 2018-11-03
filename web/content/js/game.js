@@ -1,5 +1,8 @@
 var ws = new WebSocket((document.location.protocol === "http:" ? "ws://" : "wss://") + document.location.host + "/game");
-var modal = $("#modal");
+var connectModal = $("#connectModal");
+var stalemateModal = $('#stalemateModal');
+var dcModal = $('#dcModal');
+var resultModal = $('#resultModal');
 var clickedCard;
 
 ws.onmessage = function (event) {
@@ -8,7 +11,8 @@ ws.onmessage = function (event) {
 
     switch (msg.action) {
         case "bs":
-            modal.hide();
+            connectModal.hide();
+            dcModal.hide();
             console.log("Received board state");
             clickedCard = null;
             ReloadBoard(msg);
@@ -21,19 +25,24 @@ ws.onmessage = function (event) {
             }
             break;
         case "lose":
-            console.log("lose");
+            console.log("Received lose message");
+            resultModal.show();
             break;
         case "win":
-            console.log("win");
+            console.log("Received win message");
+            resultModal.css("color", "green").show();
             break;
         case "dc":
-            console.log("dc");
+            console.log("Received dc message");
+            dcModal.show();
             break;
         case "open":
-            modal.show();
+            console.log("Received open stalemate message");
+            stalemateModal.show();
             break;
         case "close":
-            modal.hide();
+            console.log("Received close stalemate message");
+            stalemateModal.hide();
             break;
     }
 };
@@ -55,7 +64,7 @@ $('#mid').click(function () {
 });
 
 $(window).click(function (e) {
-    if ($(e.target).is('#modal'))
+    if ($(e.target).is('#connectModal'))
         hideStalemate();
 });
 
@@ -90,10 +99,11 @@ function selectCard() {
 }
 
 function hideStalemate() {
-    modal.hide();
+    connectModal.hide();
 }
 
 $('#stalemate').click(function() {
+    $('#stalemate').disable();
     ws.send(JSON.stringify({'action': 'stalemate'}));
 });
 

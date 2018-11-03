@@ -1,6 +1,6 @@
 /* The Modal (background) */
 .modal {
-    display: block; /* Hidden by default */
+    display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     padding-top: 100px; /* Location of the box */
@@ -12,7 +12,9 @@
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
-
+#connectModal {
+    display: block;
+}
 /* Modal Content */
 .modal-content {
     background-color: #fefefe;
@@ -73,33 +75,3 @@
         opacity: 1;
     }
 }
-
-/*.stalemateText:after {*/
-    /*overflow: hidden;*/
-    /*display: inline-block;*/
-    /*vertical-align: bottom;*/
-    /*-webkit-animation: ellipsis steps(4,end) 1000ms infinite;*/
-    /*animation: ellipsis steps(4,end) 1000ms infinite;*/
-    /*content: "\2026"; !* ascii code for the ellipsis character *!*/
-    /*width: 0;*/
-/*}*/
-
-/*.stalemateText {*/
-    /*color: blue;*/
-    /*position: center;*/
-    /*align-content: center;*/
-    /*font-size: large;*/
-    /*font-weight: bold;*/
-/*}*/
-
-/*@keyframes ellipsis {*/
-    /*to {*/
-        /*width: 1.25em;*/
-    /*}*/
-/*}*/
-
-/*@-webkit-keyframes ellipsis {*/
-    /*to {*/
-        /*width: 1.25em;*/
-    /*}*/
-/*}*/

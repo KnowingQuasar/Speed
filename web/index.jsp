@@ -8,10 +8,24 @@
 </head>
 
 <body>
-
-<div id="modal" class="modal">
+<div id="connectModal" class="modal">
     <div class="modal-content">
         <p>Waiting for Other Player to Join<span class="one">.</span><span class="two">.</span><span class="three">.</span></p>
+    </div>
+</div>
+<div id="stalemateModal" class="modal">
+    <div class="modal-content">
+        <p>Waiting for Other Player<span class="one">.</span><span class="two">.</span><span class="three">.</span></p>
+    </div>
+</div>
+<div id="dcModal" class="modal">
+    <div class="modal-content">
+        <p>Waiting for Other Player Rejoin<span class="one">.</span><span class="two">.</span><span class="three">.</span></p>
+    </div>
+</div>
+<div id="resultModal" class="modal">
+    <div class="modal-content">
+        <p>Lose</p>
     </div>
 </div>
 <div>
