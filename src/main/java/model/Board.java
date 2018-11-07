@@ -12,12 +12,12 @@ public class Board {
     private boolean stalemate = false;
 
     public Board() {
-        decks.add(new ArrayList<>());
-        decks.add(new ArrayList<>());
-        hands.add(new ArrayList<>());
-        hands.add(new ArrayList<>());
-        faceUpCards.add(new ArrayList<>());
-        faceUpCards.add(new ArrayList<>());
+        decks.add(new ArrayList<Card>());
+        decks.add(new ArrayList<Card>());
+        hands.add(new ArrayList<Card>());
+        hands.add(new ArrayList<Card>());
+        faceUpCards.add(new ArrayList<Card>());
+        faceUpCards.add(new ArrayList<Card>());
 
         initCards();
         for (int i = 0; i < 2; i++) {

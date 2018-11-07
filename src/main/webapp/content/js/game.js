@@ -30,7 +30,7 @@ ws.onmessage = function (event) {
             break;
         case "win":
             console.log("Received win message");
-            resultModal.css("color", "green").show();
+            resultModal.css("color", "green").text("Win").show();
             break;
         case "dc":
             console.log("Received dc message");
@@ -103,7 +103,7 @@ function hideStalemate() {
 }
 
 $('#stalemate').click(function() {
-    $('#stalemate').disable();
+    $('#stalemate').attr("disable", "disable");
     ws.send(JSON.stringify({'action': 'stalemate'}));
 });
 
