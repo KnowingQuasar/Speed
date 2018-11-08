@@ -1,3 +1,7 @@
+p {
+    margin: 0px;
+}
+
 body
 {
     background-color: forestgreen;
@@ -24,68 +28,148 @@ img {
     box-shadow: 0 0 10px 4px gold;
 }
 
-.smallCard
-{
-    width: 100px;
+.smallCard {
+    width: 11%;
     height: auto;
 }
 
 .card
 {
-    width: 200px;
+    width: 24%;
     height: auto;
+    float: left;
 }
 
 .right
 {
-    width: 258px;
+    width: 31%;
     height: auto;
-    float: left;
     padding-right: 4px;
 }
 
 .left
 {
-    width: 258px;
+    width: 31%;
     height: auto;
-    float: right;
 }
 
 .deckPlayer
 {
-    width: 100px;
-    margin-left: 50px;
-    float: right;
+    width: 12%;
+    margin-left: 8%;
 }
 
-.deckOpponent
-{
-    width: 100px;
-    margin-right: 50px;
-    float: left;
-}
+
 .cardsTop
 {
-    width: 824px;
+    max-width: 824px;
     margin: auto;
+    height: 140px;
 }
-
 .cardsBot
 {
-    width: 824px;
+    max-width: 824px;
     margin: auto;
+    height: 140px;
 }
 .cardsMid
 {
-    width: 812px;
+    max-width: 812px;
     margin: auto;
+    height: 300px;
 }
 .divLarge
 {
-    width: 204px;
+    width: 24%;
 }
 
 .divSmall
 {
-    width: 104px;
+    width: 12%;
+}
+
+#op1 {
+    float: left;
+}
+#op2 {
+    padding-left: .5%;
+    float: left;
+}
+#op3 {
+    padding-left: .5%;
+    float: left;
+}
+#op4 {
+    padding-left: .5%;
+    float: left;
+}
+#op5 {
+    padding-left: .5%;
+    float: left;
+}
+
+.deckOpponent {
+    width: 12%;
+    margin-right: 8%;
+    float: left;
+}
+
+#opD {
+    width: 91.5%;
+    margin-left: 10%;
+}
+
+#pl1 {
+    float: right;
+}
+#pl2 {
+    float: right;
+    margin-left: .5%;
+}
+#pl3 {
+    float: right;
+    margin-left: .5%;
+}
+#pl4 {
+    float: right;
+    margin-left: .5%;
+}
+#pl5 {
+    float: right;
+    margin-left: .5%;
+}
+#plD {
+    float: right;
+    margin-right: 4.5%;
+    margin-left: 8%;
+}
+
+@media only screen and (max-width: 700px) {
+    .cardsTop, .cardsBot {
+        height: 115px;
+    }
+
+    .cardsMid {
+        height: 251px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .cardsTop, .cardsBot {
+        height: 82px;
+    }
+
+    .cardsMid {
+        height: 179px;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .cardsTop, .cardsBot {
+        height: 57px;
+    }
+
+    .cardsMid {
+        height: 124px;
+    }
 }

@@ -90,6 +90,7 @@ function ReloadBoard(bs) {
             $(this.firstChild).attr('src', '/content/images/green.PNG');
         i++;
     });
+    $('#stalemate').prop("disabled", false);
 }
 
 function selectCard() {
@@ -103,7 +104,7 @@ function hideStalemate() {
 }
 
 $('#stalemate').click(function() {
-    $('#stalemate').attr("disable", "disable");
+    $('#stalemate').prop("disabled", "disabled");
     ws.send(JSON.stringify({'action': 'stalemate'}));
 });
 

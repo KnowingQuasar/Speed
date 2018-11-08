@@ -49,12 +49,12 @@
 </div>
 <br>
 <div id="pl" class="cardsBot">
-    <span class=" right"><img id="pl1" class="smallCard" src="/content/images/gray_back.png" alt="back" align="right" draggable="false" ondragstart="return false;"></span>
-    <span class="divSmall"><img id="pl2" class="smallCard" src="/content/images/gray_back.png" alt="back" draggable="false" ondragstart="return false;"></span>
-    <span class="divSmall"><img id="pl3" class="smallCard" src="/content/images/gray_back.png" alt="back" draggable="false" ondragstart="return false;"></span>
-    <span class="divSmall"><img id="pl4" class="smallCard" src="/content/images/gray_back.png" alt="back" draggable="false" ondragstart="return false;"></span>
-    <span class="divSmall"><img id="pl5" class="smallCard" src="/content/images/gray_back.png" alt="back" draggable="false" ondragstart="return false;"></span>
     <span class="deckPlayer"><img id="plD" class="smallCard" src="/content/images/gray_back.png" alt="back" draggable="false" ondragstart="return false;"></span>
+    <span class="divSmall"><img id="pl5" class="smallCard" src="/content/images/gray_back.png" alt="back" draggable="false" ondragstart="return false;"></span>
+    <span class="divSmall"><img id="pl4" class="smallCard" src="/content/images/gray_back.png" alt="back" draggable="false" ondragstart="return false;"></span>
+    <span class="divSmall"><img id="pl3" class="smallCard" src="/content/images/gray_back.png" alt="back" draggable="false" ondragstart="return false;"></span>
+    <span class="divSmall"><img id="pl2" class="smallCard" src="/content/images/gray_back.png" alt="back" draggable="false" ondragstart="return false;"></span>
+    <span class=" right"><img id="pl1" class="smallCard" src="/content/images/gray_back.png" alt="back" draggable="false" ondragstart="return false;"></span>
 </div>
 <br>
 <button id="stalemate">Stalemate</button>
