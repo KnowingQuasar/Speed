@@ -88,6 +88,7 @@ public class Board {
             sides.addAll(faceUpCards.get(0));
             sides.addAll(faceUpCards.get(1));
         }
+
         faceUpCards.get(0).add(0, sides.get(0));
         sides.remove(0);
         faceUpCards.get(1).add(0, sides.get(0));
