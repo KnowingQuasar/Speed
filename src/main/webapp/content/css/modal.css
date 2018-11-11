@@ -28,6 +28,11 @@
     font-weight: bold;
     text-align: center;
 }
+
+#win{
+    color: green;
+}
+
 .one {
     opacity: 0;
     -webkit-animation: dot 1.3s infinite;

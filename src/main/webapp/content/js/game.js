@@ -3,6 +3,7 @@ var connectModal = $("#connectModal");
 var stalemateModal = $('#stalemateModal');
 var dcModal = $('#dcModal');
 var resultModal = $('#resultModal');
+var resultModalWin = $('#resultModalWin');
 var clickedCard;
 var mCard;
 
@@ -31,7 +32,7 @@ ws.onmessage = function (event) {
             break;
         case "win":
             console.log("Received win message");
-            resultModal.show();
+            resultModalWin.show();
             break;
         case "dc":
             console.log("Received dc message");
@@ -68,9 +69,8 @@ $('#mid').click(function (e) {
     }
 });
 
-$(window).click(function (e) {
-    if ($(e.target).is('#connectModal'))
-        hideStalemate();
+$('#stalemateModal').click(function () {
+    hideStalemate();
 });
 
 function ReloadBoard(bs) {
@@ -95,7 +95,7 @@ function ReloadBoard(bs) {
             $(this.firstChild).attr('src', '/content/images/green.PNG');
         i++;
     });
-    $('#stalemate').prop("disabled", false);
+    //$('#stalemate').prop("disabled", false);
 }
 
 function selectCard() {
@@ -105,11 +105,14 @@ function selectCard() {
 }
 
 function hideStalemate() {
-    connectModal.hide();
+    $('.modal').hide();
+    //make the players button bool go back to false
+
 }
 
 $('#stalemate').click(function() {
-    $('#stalemate').prop("disabled", "disabled");
+    //$('#stalemate').prop("disabled", "disabled");
+
     ws.send(JSON.stringify({'action': 'stalemate'}));
 });
 

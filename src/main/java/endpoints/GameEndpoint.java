@@ -16,6 +16,7 @@ import model.*;
 public class GameEndpoint {
     private Session session;
     private int id;
+    private boolean buttonCheck;
 
     private static final Set<GameEndpoint> gameEndpoints = new CopyOnWriteArraySet<>();
     private static boolean createGame = true;
@@ -58,6 +59,12 @@ public class GameEndpoint {
             }
         }
         else if(msg instanceof StalemateMessage) {
+            if(id == 0) {
+                board.setId(0);
+            }
+            else{
+                board.setId(1);
+            }
             if(board.updateStalemate()) {
                 send(new CloseStalemateMessage(), id == 0 ? 1 : 0);
                 broadcastBs();

@@ -10,6 +10,9 @@ public class Board {
     private ArrayList<ArrayList<Card>> hands = new ArrayList<>();
     private int[] remaining = new int[2];
     private boolean stalemate = false;
+    private int id;
+    private boolean stalemateButtonClicked1;
+    private boolean stalemateButtonClicked2;
 
     public Board() {
         decks.add(new ArrayList<Card>());
@@ -100,9 +103,10 @@ public class Board {
     }
 
     public boolean resetStalemate(){
-        if(!stalemate)
+        if(!stalemateButtonClicked1 && !stalemateButtonClicked2)
             return false;
-        stalemate = false;
+        stalemateButtonClicked2 = false;
+        stalemateButtonClicked1 = false;
         return true;
     }
 
@@ -115,6 +119,11 @@ public class Board {
         String fc[] = {faceUpCards.get(0).get(0).toString(),
                 faceUpCards.get(1).get(0).toString()};
         return new BoardState(fc, hnd, new int[] {remaining[pl], remaining[pl == 0 ? 1 : 0]});
+    }
+
+    public void setId(int Id)
+    {
+        this.id = Id;
     }
 
     public boolean placeCard(String card, String midCard, int pl) throws IllegalArgumentException {
@@ -139,12 +148,30 @@ public class Board {
     }
 
     public boolean updateStalemate() {
-        if (stalemate) {
-            recycle();
-            stalemate = false;
-            return true;
+
+        if(id == 0 && stalemateButtonClicked1 == false)
+        {
+            stalemateButtonClicked1 = true;
+            if(stalemateButtonClicked2){
+                recycleCheck();
+                return true;
+            }
         }
-        stalemate = true;
+        else if(id == 1 && stalemateButtonClicked2 == false)
+        {
+            stalemateButtonClicked2 = true;
+            if(stalemateButtonClicked1){
+                recycleCheck();
+                return true;
+            }
+        }
         return false;
+    }
+    //THIS WAS COMPLAINING AT ME BECAUSE REASONS!
+    private void recycleCheck()
+    {
+        recycle();
+        stalemateButtonClicked2 = false;
+        stalemateButtonClicked1 = false;
     }
 }

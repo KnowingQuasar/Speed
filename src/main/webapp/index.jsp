@@ -28,6 +28,11 @@
         <p>Lose</p>
     </div>
 </div>
+<div id="resultModalWin" class="modal">
+    <div class="modal-content" id="win">
+        <p>Win</p>
+    </div>
+</div>
 <div>
     <table>
         <tr>
