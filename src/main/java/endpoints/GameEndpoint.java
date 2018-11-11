@@ -43,7 +43,7 @@ public class GameEndpoint {
     @OnMessage
     public void onMessage(Message msg) {
         if (msg instanceof PlaceMessage) {
-            if (!board.placeCard(((PlaceMessage) msg).getCard(), id)) {
+            if (!board.placeCard(((PlaceMessage) msg).getCard(),((PlaceMessage)msg).getMidCard(), id)) {
                 send(new DoofusMessage(((PlaceMessage) msg).getCard()));
             }
             else{

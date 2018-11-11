@@ -4,7 +4,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="content/css/style.css"/>
     <link rel="stylesheet" href="content/css/modal.css"/>
-    <title>Chat</title>
+    <title>Speed</title>
 </head>
 
 <body>

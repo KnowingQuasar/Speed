@@ -4,6 +4,7 @@ var stalemateModal = $('#stalemateModal');
 var dcModal = $('#dcModal');
 var resultModal = $('#resultModal');
 var clickedCard;
+var mCard;
 
 ws.onmessage = function (event) {
     console.log(event.data);
@@ -30,7 +31,7 @@ ws.onmessage = function (event) {
             break;
         case "win":
             console.log("Received win message");
-            resultModal.css("color", "green").text("Win").show();
+            resultModal.show();
             break;
         case "dc":
             console.log("Received dc message");
@@ -54,12 +55,16 @@ $('#pl').click(function (e) {
     selectCard();
 });
 
-$('#mid').click(function () {
-    if (clickedCard) {
+$('#mid').click(function (e) {
+    if(!$(e.target).hasClass('card') || $(e.target).attr('id') === 's1' || $(e.target).attr('id') === 's2')
+        return;
+    mCard = $(e.target);
+    if (clickedCard && mCard) {
         $('.selected').removeClass('selected');
+        let midCard = mCard.attr('src').substring('/content/images/'.length, mCard.attr('src').lastIndexOf('.'));
         let card = clickedCard.attr('src').substring('/content/images/'.length, clickedCard.attr('src').lastIndexOf('.'));
-        console.log("Sending " + card);
-        ws.send(JSON.stringify({'action': 'place', 'card': card}));
+        console.log("Placing " + card + " on midCard " + midCard);
+        ws.send(JSON.stringify({'action': 'place', 'card': card, 'midCard': midCard}));
     }
 });
 

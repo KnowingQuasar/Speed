@@ -69,7 +69,9 @@ public class Board {
     }
 
     private boolean canBePlaced(Card fc, Card c) {
+        //face card value
         int fcval = fc.getValue();
+        //card value
         int cval = c.getValue();
         return (fcval - 1 == cval || fcval + 1 == cval) || (fcval == 13 && cval == 1)
                 || (fcval == 1 && cval == 13);
@@ -115,15 +117,17 @@ public class Board {
         return new BoardState(fc, hnd, new int[] {remaining[pl], remaining[pl == 0 ? 1 : 0]});
     }
 
-    public boolean placeCard(String card, int pl) throws IllegalArgumentException {
+    public boolean placeCard(String card, String midCard, int pl) throws IllegalArgumentException {
         Card c = new Card(card);
+        Card m = new Card(midCard);
         if(c.getValue() == 0)
             return true;
-        if (canBePlaced(faceUpCards.get(0).get(0), c)) {
+        if (faceUpCards.get(0).get(0) == m && canBePlaced(faceUpCards.get(0).get(0), c)) {
             if(update(c, pl))
                 return false;
             faceUpCards.get(0).add(0, c);
-        } else if (canBePlaced(faceUpCards.get(1).get(0), c)) {
+        }
+        else if (faceUpCards.get(1).get(0) == m && canBePlaced(faceUpCards.get(1).get(0), c)) {
             if(update(c, pl))
                 return false;
             faceUpCards.get(1).add(0, c);
