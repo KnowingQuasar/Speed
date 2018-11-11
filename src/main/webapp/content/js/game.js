@@ -75,8 +75,8 @@ function ReloadBoard(bs) {
     if (bs.remaining[1] === 0) {
         $('#opD').src = '/content/images/green.PNG';
     }
-    $('#remaining1').text('Total 1: ' + bs.remaining[0]);
-    $('#remaining2').text('Total 2: ' + bs.remaining[1]);
+    $('#remaining1').text('Player 1: ' + bs.remaining[0]);
+    $('#remaining2').text('Player 2: ' + bs.remaining[1]);
     $('#fc1').attr('src', `/content/images/${bs.fc[0]}.png`);
     $('#fc2').attr('src', `/content/images/${bs.fc[1]}.png`);
     let i = 0;

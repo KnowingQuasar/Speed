@@ -29,7 +29,12 @@
     </div>
 </div>
 <div>
-    <p id="remaining1"></p>     <p id="remaining2"></p>
+    <table>
+        <tr>
+            <th><p id="remaining1"></p></th>
+            <th><p id="remaining2"></p></th>
+        </tr>
+    </table>
     <br>
 </div>
 <div class="cardsTop">
