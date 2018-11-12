@@ -50,7 +50,7 @@ ws.onmessage = function (event) {
 };
 
 $('#pl').click(function (e) {
-    if (!$(e.target).hasClass('smallCard') || $(e.target).attr('id') === 'plD')
+    if (!$(e.target).hasClass('smallCard') || $(e.target).attr('src').includes('green') || $(e.target).attr('id') === 'plD')
         return;
     clickedCard = $(e.target);
     selectCard();
@@ -69,7 +69,7 @@ $('#mid').click(function (e) {
     }
 });
 
-$('#stalemateModal').click(function () {
+stalemateModal.click(function () {
     hideStalemate();
 });
 

@@ -150,7 +150,7 @@ public class Board {
 
     public boolean updateStalemate() {
 
-        if(id == 0 && stalemateButtonClicked1 == false)
+        if(id == 0 && !stalemateButtonClicked1)
         {
             stalemateButtonClicked1 = true;
             if(stalemateButtonClicked2){
@@ -158,7 +158,7 @@ public class Board {
                 return true;
             }
         }
-        else if(id == 1 && stalemateButtonClicked2 == false)
+        else if(id == 1 && !stalemateButtonClicked2)
         {
             stalemateButtonClicked2 = true;
             if(stalemateButtonClicked1){
